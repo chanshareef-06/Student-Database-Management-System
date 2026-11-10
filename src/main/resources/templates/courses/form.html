@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title=(${course.id} != null ? 'Edit Course' : 'New Course'))}"></head><body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <h1 th:text="${course.id} != null ? 'Edit Course' : 'New Course'">Course Form</h1>
+
+    <form th:action="@{/courses/save}" th:object="${course}" method="post" class="form">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label for="code">Course Code</label>
+            <input type="text" id="code" th:field="*{code}" placeholder="e.g. CS101"/>
+            <span class="field-error" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" th:field="*{title}" placeholder="e.g. Introduction to Programming"/>
+            <span class="field-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="credits">Credits</label>
+            <input type="number" id="credits" th:field="*{credits}" min="1" max="10"/>
+            <span class="field-error" th:if="${#fields.hasErrors('credits')}" th:errors="*{credits}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="instructor">Instructor</label>
+            <input type="text" id="instructor" th:field="*{instructor}" placeholder="e.g. Dr. Smith"/>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" th:field="*{description}" rows="4" placeholder="Course description"></textarea>
+        </div>
+
+        <div class="button-row">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/courses}" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

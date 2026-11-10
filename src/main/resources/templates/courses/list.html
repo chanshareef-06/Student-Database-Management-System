@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title='Courses')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <div class="page-header">
+        <h1>Courses</h1>
+        <a th:href="@{/courses/new}" class="btn btn-primary">+ New Course</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <form th:action="@{/courses}" method="get" class="search-form">
+        <input type="text" name="keyword" placeholder="Search by title..." th:value="${keyword}"/>
+        <button type="submit" class="btn btn-secondary">Search</button>
+        <a th:href="@{/courses}" class="btn btn-link">Clear</a>
+    </form>
+
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Title</th>
+            <th>Credits</th>
+            <th>Instructor</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(courses)}">
+            <td colspan="5" class="empty-state">No courses found.</td>
+        </tr>
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.code}">CS101</td>
+            <td>
+                <a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}">Title</a>
+            </td>
+            <td th:text="${course.credits}">3</td>
+            <td th:text="${course.instructor ?: 'N/A'}">Instructor</td>
+            <td class="actions">
+                <a th:href="@{/courses/{id}/edit(id=${course.id})}" class="btn btn-small btn-secondary">Edit</a>
+                <a th:href="@{/courses/{id}/delete(id=${course.id})}"
+                   class="btn btn-small btn-danger"
+                   onclick="return confirm('Delete this course? This will also remove related enrollments.');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

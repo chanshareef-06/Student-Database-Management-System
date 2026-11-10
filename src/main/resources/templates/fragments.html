@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Shared head fragment -->
+    <th:block th:fragment="head(title)">
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title th:text="${title} + ' | Student Course Management'">Student Course Management</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    </th:block>
+</head>
+<body>
+<!-- Shared navigation fragment -->
+<header th:fragment="nav" class="navbar">
+    <div class="navbar-brand">
+        <a th:href="@{/}">📚 SCMS</a>
+    </div>
+    <nav class="navbar-links">
+        <a th:href="@{/}">Dashboard</a>
+        <a th:href="@{/students}">Students</a>
+        <a th:href="@{/courses}">Courses</a>
+        <a th:href="@{/enrollments}">Enrollments</a>
+    </nav>
+</header>
+
+<!-- Shared footer fragment -->
+<footer th:fragment="footer" class="footer">
+    <p>&copy; 2026 Student Course Management System</p>
+</footer>
+</body>
+</html>

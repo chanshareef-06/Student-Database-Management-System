@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title='Dashboard')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <h1>Dashboard</h1>
+    <p class="subtitle">Overview of your Student Course Management System</p>
+
+    <div class="card-grid">
+        <div class="stat-card">
+            <div class="stat-number" th:text="${studentCount}">0</div>
+            <div class="stat-label">Students</div>
+            <a th:href="@{/students}" class="stat-link">Manage students &rarr;</a>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" th:text="${courseCount}">0</div>
+            <div class="stat-label">Courses</div>
+            <a th:href="@{/courses}" class="stat-link">Manage courses &rarr;</a>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" th:text="${enrollmentCount}">0</div>
+            <div class="stat-label">Enrollments</div>
+            <a th:href="@{/enrollments}" class="stat-link">Manage enrollments &rarr;</a>
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="button-row">
+            <a th:href="@{/students/new}" class="btn btn-primary">+ New Student</a>
+            <a th:href="@{/courses/new}" class="btn btn-primary">+ New Course</a>
+            <a th:href="@{/enrollments/new}" class="btn btn-primary">+ New Enrollment</a>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

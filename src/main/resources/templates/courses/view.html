@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('title=Course Details')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <div class="page-header">
+        <h1 th:text="${course.title}">Course Title</h1>
+        <div class="button-row">
+            <a th:href="@{/courses/{id}/edit(id=${course.id})}" class="btn btn-secondary">Edit</a>
+            <a th:href="@{/courses}" class="btn btn-link">Back to List</a>
+        </div>
+    </div>
+
+    <div class="detail-card">
+        <p><strong>Code:</strong> <span th:text="${course.code}"></span></p>
+        <p><strong>Credits:</strong> <span th:text="${course.credits}"></span></p>
+        <p><strong>Instructor:</strong> <span th:text="${course.instructor ?: 'N/A'}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${course.description ?: 'N/A'}"></span></p>
+    </div>
+
+    <h2>Enrolled Students</h2>
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Enrollment Date</th>
+            <th>Grade</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(enrollments)}">
+            <td colspan="5" class="empty-state">No students enrolled yet.</td>
+        </tr>
+        <tr th:each="e : ${enrollments}">
+            <td th:text="${e.student.name}">Name</td>
+            <td th:text="${e.student.email}">email@example.com</td>
+            <td th:text="${e.enrollmentDate}">2026-01-01</td>
+            <td th:text="${e.grade ?: '-'}">A</td>
+            <td th:text="${e.status}">ACTIVE</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

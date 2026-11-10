@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title=${enrollment.id} != null ? 'Edit Enrollment' : 'New Enrollment')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <h1 th:text="${enrollment.id} != null ? 'Edit Enrollment' : 'New Enrollment'">Enrollment Form</h1>
+
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <form th:action="@{/enrollments/save}" th:object="${enrollment}" method="post" class="form">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+            <label for="student">Student</label>
+            <select id="student" th:field="*{student}">
+                <option value="">-- Select Student --</option>
+                <option th:each="s : ${students}" th:value="${s.id}" th:text="${s.name + ' (' + s.email + ')'}"></option>
+            </select>
+            <span class="field-error" th:if="${#fields.hasErrors('student')}" th:errors="*{student}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="course">Course</label>
+            <select id="course" th:field="*{course}">
+                <option value="">-- Select Course --</option>
+                <option th:each="c : ${courses}" th:value="${c.id}" th:text="${c.title + ' (' + c.code + ')'}"></option>
+            </select>
+            <span class="field-error" th:if="${#fields.hasErrors('course')}" th:errors="*{course}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="enrollmentDate">Enrollment Date</label>
+            <input type="date" id="enrollmentDate" th:field="*{enrollmentDate}"/>
+            <span class="field-error" th:if="${#fields.hasErrors('enrollmentDate')}" th:errors="*{enrollmentDate}"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status" th:field="*{status}">
+                <option th:each="st : ${T(com.scms.model.Enrollment.EnrollmentStatus).values()}"
+                        th:value="${st}" th:text="${st}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="grade">Grade</label>
+            <input type="text" id="grade" th:field="*{grade}" placeholder="e.g. A, B+, Incomplete"/>
+        </div>
+
+        <div class="button-row">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{/enrollments}" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>

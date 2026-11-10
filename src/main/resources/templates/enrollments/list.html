@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(title='Enrollments')}"></head>
+<body>
+<header th:replace="~{fragments :: nav}"></header>
+
+<main class="container">
+    <div class="page-header">
+        <h1>Enrollments</h1>
+        <a th:href="@{/enrollments/new}" class="btn btn-primary">+ New Enrollment</a>
+    </div>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Enrollment Date</th>
+            <th>Grade</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(enrollments)}">
+            <td colspan="7" class="empty-state">No enrollments found.</td>
+        </tr>
+        <tr th:each="e : ${enrollments}">
+            <td th:text="${e.id}">1</td>
+            <td th:text="${e.student.name}">Student Name</td>
+            <td th:text="${e.course.title + ' (' + e.course.code + ')'}">Course</td>
+            <td th:text="${e.enrollmentDate}">2026-01-01</td>
+            <td th:text="${e.grade ?: '-'}">A</td>
+            <td th:text="${e.status}">ACTIVE</td>
+            <td class="actions">
+                <a th:href="@{/enrollments/{id}/edit(id=${e.id})}" class="btn btn-small btn-secondary">Edit</a>
+                <a th:href="@{/enrollments/{id}/delete(id=${e.id})}"
+                   class="btn btn-small btn-danger"
+                   onclick="return confirm('Remove this enrollment?');">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer th:replace="~{fragments :: footer}"></footer>
+</body>
+</html>
